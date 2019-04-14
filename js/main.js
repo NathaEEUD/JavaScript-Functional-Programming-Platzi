@@ -31,18 +31,20 @@ let calories = document.getElementById('calories')
 let carbs = document.getElementById('carbs')
 let protein = document.getElementById('protein')
 
-const validateInputs = () => {
-  description.value ? '' : description.classList.add('is-invalid')
-  calories.value ? '' : calories.classList.add('is-invalid')
-  carbs.value ? '' : carbs.classList.add('is-invalid')
-  protein.value ? '' : protein.classList.add('is-invalid')
+const inputs = [description, calories, carbs, protein]
 
-  if(description.value && calories.value && carbs.value && protein.value) {
+const showInvalid = input => input.value ? '' : input.classList.add('is-invalid')
+
+const isValid = input => input.value ? true : false 
+
+const addKeydownEv = input => input.addEventListener('keydown', () => input.classList.remove('is-invalid'))
+
+const validateInputs = () => {
+  inputs.forEach(input => showInvalid(input))
+
+  if(inputs.every(input => isValid(input))) {
     console.log('OK!')
   }
 }
 
-description.addEventListener('keydown', () => description.classList.remove('is-invalid'))
-calories.addEventListener('keydown', () => calories.classList.remove('is-invalid'))
-carbs.addEventListener('keydown', () => carbs.classList.remove('is-invalid'))
-protein.addEventListener('keydown', () => protein.classList.remove('is-invalid'))
+inputs.forEach(input => addKeydownEv(input))
