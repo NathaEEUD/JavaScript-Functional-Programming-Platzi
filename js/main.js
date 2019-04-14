@@ -31,12 +31,7 @@ let calories = document.getElementById('calories')
 let carbs = document.getElementById('carbs')
 let protein = document.getElementById('protein')
 
-// Get the value --> description.value
-
 const validateInputs = () => {
-  // if (description.value === '') {
-  //   description.classList.add('is-invalid')
-  // }
   description.value ? '' : description.classList.add('is-invalid')
   calories.value ? '' : calories.classList.add('is-invalid')
   carbs.value ? '' : carbs.classList.add('is-invalid')
