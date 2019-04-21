@@ -1,31 +1,6 @@
 const compose = (...functions) => data =>
   functions.reduceRight((value, func) => func(value), data)
 
-/* JQuery */
-// let description = $('#description')
-// let calories = $('#calories')
-// let carbs = $('#carbs')
-// let protein = $('#protein')
-
-// // Get the value --> description.val()
-
-// const validateInputs = () => {
-//   description.value ? '' : description.addClass('is-invalid')
-//   calories.value ? '' : calories.addClass('is-invalid')
-//   carbs.value ? '' : carbs.addClass('is-invalid')
-//   protein.value ? '' : protein.addClass('is-invalid')
-
-//   if(description.val() && calories.val() && carbs.val() && protein.val()) {
-//     console.log('OK!')
-//   }
-// }
-
-// description.keypress(() => description.removeClass('is-invalid'))
-// calories.keypress(() => calories.removeClass('is-invalid'))
-// carbs.keypress(() => carbs.removeClass('is-invalid'))
-// protein.keypress(() => protein.removeClass('is-invalid'))
-
-/* VanillaJS */
 let description = document.getElementById('description')
 let calories = document.getElementById('calories')
 let carbs = document.getElementById('carbs')
@@ -35,51 +10,22 @@ const inputs = [description, calories, carbs, protein]
 
 let list = []
 
-// Imperative
-// const attrsToString = (obj = {}) => {
-//   const keys = Object.keys(obj)
-//   const attrs = []
-
-//   for (let i = 0; i < keys.length; i++) {
-//     let attr = keys[i]
-//     attrs.push(`${attr}="${obj[attr]}"`)
-//   }
-
-//   const string = attrs.join('')
-
-//   return string
-// }
-
-// Declarative
 const attrsToString = (obj = {}) => 
   Object.keys(obj)
     .map(item => `${item}="${obj[item]}"`)
     .join('')
 
-const tagAttrs = obj => (content = '') => `<${obj.tag} ${obj.attrs ? ' ' : ''}${attrsToString(obj.attrs)}>${content}</${obj.tag}>`
+const tagAttrs = obj => (content = '') => 
+  `<${obj.tag} ${obj.attrs ? ' ' : ''}${attrsToString(obj.attrs)}>${content}</${obj.tag}>`
 
-// Imoerative
-// const tag = t => {
-//   if(typeof t === 'string') {
-//     return tagAttrs({tag: t})
-//   } else {
-//     return tagAttrs(t)
-//   }
-// }
-
-// Declarative
 const tag = t => typeof t === 'string' ? tagAttrs({tag: t}) : tagAttrs(t)
 
 const tableRow = tag('tr')
-// const tableRows = items => tableRow(tableCells(items))
 const tableRows = items => compose(tableRow, tableCells)(items)
 
 const tableCell = tag('td')
 const tableCells = items => items.map(tableCell).join('')
 
-{/* <button class="btn btn-outline-danger" onclick="removeItem(index)">
-  <i class="fas fa-trash-alt"></i>
-</button> */}
 const trashIcon = tag({tag: 'i', attrs: {class: 'fas fa-trash-alt'}})('')
 
 const showInvalid = input => input.value ? '' : input.classList.add('is-invalid')
