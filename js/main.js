@@ -35,29 +35,40 @@ const inputs = [description, calories, carbs, protein]
 
 let list = []
 
-const attrsToString = (obj = {}) => {
-  const keys = Object.keys(obj)
-  const attrs = []
+// Imperative
+// const attrsToString = (obj = {}) => {
+//   const keys = Object.keys(obj)
+//   const attrs = []
 
-  for (let i = 0; i < keys.length; i++) {
-    let attr = keys[i]
-    attrs.push(`${attr}="${obj[attr]}"`)
-  }
+//   for (let i = 0; i < keys.length; i++) {
+//     let attr = keys[i]
+//     attrs.push(`${attr}="${obj[attr]}"`)
+//   }
 
-  const string = attrs.join('')
+//   const string = attrs.join('')
 
-  return string
-}
+//   return string
+// }
+
+// Declarative
+const attrsToString = (obj = {}) => 
+  Object.keys(obj)
+    .map(item => `${item}="${obj[item]}"`)
+    .join('')
 
 const tagAttrs = obj => (content = '') => `<${obj.tag} ${obj.attrs ? ' ' : ''}${attrsToString(obj.attrs)}>${content}</${obj.tag}>`
 
-const tag = t => {
-  if(typeof t === 'string') {
-    return tagAttrs({tag: t})
-  } else {
-    return tagAttrs(t)
-  }
-}
+// Imoerative
+// const tag = t => {
+//   if(typeof t === 'string') {
+//     return tagAttrs({tag: t})
+//   } else {
+//     return tagAttrs(t)
+//   }
+// }
+
+// Declarative
+const tag = t => typeof t === 'string' ? tagAttrs({tag: t}) : tagAttrs(t)
 
 const tableRow = tag('tr')
 // const tableRows = items => tableRow(tableCells(items))
