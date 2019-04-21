@@ -66,6 +66,11 @@ const tableRows = items => compose(tableRow, tableCells)(items)
 const tableCell = tag('td')
 const tableCells = items => items.map(tableCell).join('')
 
+{/* <button class="btn btn-outline-danger" onclick="removeItem(index)">
+  <i class="fas fa-trash-alt"></i>
+</button> */}
+const trashIcon = tag({tag: 'i', attrs: {class: 'fas fa-trash-alt'}})('')
+
 const showInvalid = input => input.value ? '' : input.classList.add('is-invalid')
 
 const isValid = input => input.value ? true : false 
@@ -118,13 +123,28 @@ const cleanInputs = () => {
 const renderItems = () => {
   const listWrapper = document.querySelector('tbody')
   listWrapper.innerHTML = ''
-  debugger
-  list.map(item => {
+  list.map((item, index) => {
+    const removeButton = tag({
+      tag: 'button',
+      attrs: {
+        class: 'btn btn-outline-danger',
+        onclick: `removeItem(${index})`
+      }
+    })(trashIcon)
+
     listWrapper.innerHTML += tableRows([
       item.description,
       item.calories,
       item.carbs,
-      item.protein
+      item.protein,
+      removeButton
     ])
   })
+}
+
+const removeItem = (index) => {
+  list.splice(index, 1)
+
+  updateTotals()
+  renderItems()
 }
