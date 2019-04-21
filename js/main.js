@@ -90,7 +90,22 @@ const add = () => {
 
   list.push(newItem)
   cleanInputs()
+  updateTotals()
   console.log(list)
+}
+
+const updateTotals = () => {
+  let calories = 0, carbs = 0, protein = 0
+
+  list.map(item => {
+    calories += item.calories,
+    carbs += item.carbs,
+    protein += item.protein
+  })
+
+  document.querySelector('#totalCalories').textContent = calories
+  document.querySelector('#totalCarbs').textContent = carbs
+  document.querySelector('#totalProtein').textContent = protein
 }
 
 const cleanInputs = () => {
