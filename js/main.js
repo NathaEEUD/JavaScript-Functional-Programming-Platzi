@@ -59,6 +59,13 @@ const tag = t => {
   }
 }
 
+const tableRow = tag('tr')
+// const tableRows = items => tableRow(tableCells(items))
+const tableRows = items => compose(tableRow, tableCells)(items)
+
+const tableCell = tag('td')
+const tableCells = items => item.map(tableCell).join('')
+
 const showInvalid = input => input.value ? '' : input.classList.add('is-invalid')
 
 const isValid = input => input.value ? true : false 
