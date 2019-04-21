@@ -53,9 +53,9 @@ const tagAttrs = obj => (content = '') => `<${obj.tag} ${obj.attrs ? ' ' : ''}${
 
 const tag = t => {
   if(typeof t === 'string') {
-    tagAttrs({tag: t})
+    return tagAttrs({tag: t})
   } else {
-    tagAttrs(t)
+    return tagAttrs(t)
   }
 }
 
@@ -64,7 +64,7 @@ const tableRow = tag('tr')
 const tableRows = items => compose(tableRow, tableCells)(items)
 
 const tableCell = tag('td')
-const tableCells = items => item.map(tableCell).join('')
+const tableCells = items => items.map(tableCell).join('')
 
 const showInvalid = input => input.value ? '' : input.classList.add('is-invalid')
 
@@ -91,7 +91,7 @@ const add = () => {
   list.push(newItem)
   cleanInputs()
   updateTotals()
-  console.log(list)
+  renderItems()
 }
 
 const updateTotals = () => {
@@ -113,4 +113,18 @@ const cleanInputs = () => {
   calories.value = 0
   carbs.value = 0
   protein.value = 0
+}
+
+const renderItems = () => {
+  const listWrapper = document.querySelector('tbody')
+  listWrapper.innerHTML = ''
+  debugger
+  list.map(item => {
+    listWrapper.innerHTML += tableRows([
+      item.description,
+      item.calories,
+      item.carbs,
+      item.protein
+    ])
+  })
 }
